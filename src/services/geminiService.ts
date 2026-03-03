@@ -1,7 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 export interface ScriptRequest {
   name: string;
   age: string;
@@ -14,6 +12,13 @@ export interface ScriptRequest {
 }
 
 export async function generateScript(request: ScriptRequest): Promise<string> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is missing. Please add it to your environment variables.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+
   const prompt = `
 Anda adalah "ProMonolog Script Engine", seorang asisten AI spesialis dalam pembuatan struktur naskah konten monolog profesional yang komprehensif.
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { motion } from 'motion/react';
 import { generateScript, ScriptRequest } from './services/geminiService';
 import { Loader2, Copy, Check, FileText, Video, User, Sparkles } from 'lucide-react';
 
@@ -54,22 +55,35 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+      <motion.header 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white border-b border-slate-200 sticky top-0 z-10"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-indigo-600 p-2 rounded-lg">
+            <motion.div 
+              whileHover={{ rotate: 15, scale: 1.1 }}
+              className="bg-indigo-600 p-2 rounded-lg"
+            >
               <Sparkles className="w-5 h-5 text-white" />
-            </div>
+            </motion.div>
             <h1 className="text-xl font-bold tracking-tight text-slate-900">ProMonolog Script Engine</h1>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Form Section */}
-          <div className="lg:col-span-4 space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="lg:col-span-4 space-y-6"
+          >
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
               <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <User className="w-5 h-5 text-indigo-600" />
@@ -208,10 +222,15 @@ export default function App() {
                 </button>
               </form>
             </div>
-          </div>
+          </motion.div>
 
           {/* Result Section */}
-          <div className="lg:col-span-8">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="lg:col-span-8"
+          >
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 min-h-[600px] flex flex-col overflow-hidden">
               
               <div className="border-b border-slate-200 px-6 py-4 flex items-center justify-between bg-slate-50/50">
@@ -248,15 +267,19 @@ export default function App() {
                 )}
 
                 {result && (
-                  <div className="prose prose-slate prose-indigo max-w-none">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="prose prose-slate prose-indigo max-w-none"
+                  >
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {result}
                     </ReactMarkdown>
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </main>
